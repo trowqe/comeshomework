@@ -3,10 +3,10 @@ package task3;
 import java.util.Random;
 
 public class ThreadToPush implements Runnable {
-    private SynchronizedStack stack;
+    private Stack stack;
     private int pushTimes;
 
-    public ThreadToPush(SynchronizedStack stack, int pushTimes) {
+    public ThreadToPush(Stack stack, int pushTimes) {
         this.stack = stack;
         this.pushTimes = pushTimes;
     }

@@ -1,10 +1,10 @@
 package task3;
 
 public class ThreadToPop implements Runnable {
-    private SynchronizedStack stack;
+    private Stack stack;
     private int popTimes;
 
-    public ThreadToPop(SynchronizedStack stack, int popTimes) {
+    public ThreadToPop(Stack stack, int popTimes) {
         this.stack = stack;
         this.popTimes = popTimes;
     }

@@ -3,7 +3,7 @@ package task3;
 import java.util.LinkedList;
 import java.util.List;
 
-public class SynchronizedStack {
+public class SynchronizedStack implements Stack{
     private int size;
     private int headIndex;
     private LinkedList stack;
