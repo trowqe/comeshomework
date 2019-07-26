@@ -31,7 +31,7 @@ public class SynchronizedStack {
     }
 
     synchronized public Integer pop() {
-        while (top == bottom) {
+        while (top == bottom && isEmpty()) {
             try {
                 wait();
                 System.out.println("thread " + Thread.currentThread().getName()+" wait");
