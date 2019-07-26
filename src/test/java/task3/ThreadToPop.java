@@ -10,6 +10,7 @@ public class ThreadToPop implements Runnable {
     }
 
     public void run() {
+        Thread.currentThread().setName("ThreadToPop");
         for (int i = 0; i < popTimes; i++)
             System.out.println("pop: " + stack.pop());
     }

@@ -5,64 +5,58 @@ import java.util.List;
 
 public class SynchronizedStack {
     private int size;
-    private int top;
-    private int bottom;
-    private List stack;
+    private int headIndex;
+    private LinkedList stack;
 
     public SynchronizedStack(int size) {
         this.size = size;
-        this.bottom = 0;
-        this.top = 0;
         this.stack = new LinkedList<Integer>();
     }
 
     synchronized public void push(Integer i) {
-        while (bottom == size) {
+        while (headIndex==size) {
             try {
                 wait();
-                System.out.println("thread " + Thread.currentThread().getName()+" wait");
+                System.out.println("thread " + Thread.currentThread().getName() + " wait");
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
         }
-        stack.add(top, i);
-        top++;
+        stack.addLast(i);
+        headIndex++;
         notify();
     }
 
     synchronized public Integer pop() {
-        while (top == bottom && isEmpty()) {
+        while (stack.isEmpty()) {
             try {
                 wait();
-                System.out.println("thread " + Thread.currentThread().getName()+" wait");
+                System.out.println("thread " + Thread.currentThread().getName() + " wait");
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
         }
-        Integer poppedInt = (Integer) stack.remove(top);
-        top--;
+        Integer poppedInt = (Integer) stack.removeLast();
+        headIndex--;
         notify();
         return poppedInt;
     }
 
     synchronized public Integer peek() {
-        while (top == bottom && isEmpty()) {
+        while (stack.isEmpty()) {
             try {
                 wait();
-                System.out.println("thread " + Thread.currentThread().getName()+" wait");
+                System.out.println("thread " + Thread.currentThread().getName() + " wait");
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
         }
-        Integer poppedInt = (Integer) stack.get(top);
-        top--;
+        Integer poppedInt = (Integer) stack.getLast();
         notify();
         return poppedInt;
     }
 
-    synchronized public boolean isEmpty() {
-        return stack.isEmpty();
+    public int getSize(){
+        return stack.size();
     }
-
-
 }

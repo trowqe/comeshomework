@@ -12,6 +12,7 @@ public class ThreadToPeek implements Runnable{
     }
 
     public void run() {
+        Thread.currentThread().setName("ThreadToPeek");
         for (int i = 0; i < peekTimes; i++)
             System.out.println("peek: " + stack.peek());
     }

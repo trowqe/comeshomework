@@ -12,6 +12,7 @@ public class ThreadToPush implements Runnable {
     }
 
     public void run() {
+        Thread.currentThread().setName("ThreadToPush");
         for (int i = 0; i < pushTimes; i++) {
             Integer intToPush = new Random().nextInt();
             System.out.println("push: "+intToPush);
