@@ -9,8 +9,8 @@ public class ConcurrentStackTest {
     public void concurrentStackTestPop(){
         ConcurrentStack stack = new ConcurrentStack(10);
 
-        ThreadToPop threadToPop = new ThreadToPop(stack, 20);
-        ThreadToPush threadToPush = new ThreadToPush(stack, 20);
+        ThreadToPop threadToPop = new ThreadToPop(stack, 10);
+        ThreadToPush threadToPush = new ThreadToPush(stack, 10);
 
         Thread thread1 = new Thread(threadToPop);
         Thread thread2 = new Thread(threadToPush);

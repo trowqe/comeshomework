@@ -1,10 +1,11 @@
 package task3;
 
 import java.util.LinkedList;
+import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
-public class ConcurrentStack implements Stack{
+public class ConcurrentStack implements Stack {
     private int size;
     private LinkedList stack;
 
@@ -13,43 +14,58 @@ public class ConcurrentStack implements Stack{
         this.stack = new LinkedList<Integer>();
     }
 
-     public void push(Integer i) {
+    public void push(Integer i) {
         Lock lock = new ReentrantLock();
-            lock.lock();
-            try {
-                // весьма сомнительно
-                while((getSize()==size)){
-
-                }
-                stack.addLast(i);
-            } finally {
-                lock.unlock();
+        Condition condition = lock.newCondition();
+        lock.lock();
+        try {
+            while (getSize() == size) {
+                condition.await();
             }
+            stack.addLast(i);
+        } catch (InterruptedException e) {
+            System.out.println(e.getMessage());
+        } finally {
+            lock.unlock();
+            condition.signal();
+        }
     }
 
     public Integer pop() {
+        Integer popped = null;
         Lock lock = new ReentrantLock();
+        Condition condition = lock.newCondition();
         lock.lock();
         try {
-            while((getSize()==0)){
-
+            while ((getSize() == 0)) {
+                condition.await();
             }
-            return (Integer) stack.removeLast();
+            popped = (Integer) stack.removeLast();
+        } catch (InterruptedException e) {
+            System.out.println(e.getMessage());
         } finally {
             lock.unlock();
+            condition.signal();
+            return popped;
         }
     }
 
     public Integer peek() {
+        Integer peeked = null;
         Lock lock = new ReentrantLock();
+        Condition condition = lock.newCondition();
         lock.lock();
         try {
-            while((getSize()==0)){
-
+            while ((getSize() == 0)) {
+                condition.await();
             }
-            return  (Integer) stack.getLast();
+            peeked = (Integer) stack.getLast();
+        } catch (InterruptedException e) {
+            System.out.println(e.getMessage());
         } finally {
             lock.unlock();
+            condition.signal();
+            return peeked;
         }
     }
 
