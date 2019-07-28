@@ -23,11 +23,11 @@ public class ConcurrentStack implements Stack {
                 condition.await();
             }
             stack.addLast(i);
+            condition.signal();
         } catch (InterruptedException e) {
             System.out.println(e.getMessage());
         } finally {
             lock.unlock();
-            condition.signal();
         }
     }
 
@@ -41,11 +41,11 @@ public class ConcurrentStack implements Stack {
                 condition.await();
             }
             popped = (Integer) stack.removeLast();
+            condition.signal();
         } catch (InterruptedException e) {
             System.out.println(e.getMessage());
         } finally {
             lock.unlock();
-            condition.signal();
             return popped;
         }
     }
@@ -60,11 +60,11 @@ public class ConcurrentStack implements Stack {
                 condition.await();
             }
             peeked = (Integer) stack.getLast();
+            condition.signal();
         } catch (InterruptedException e) {
             System.out.println(e.getMessage());
         } finally {
             lock.unlock();
-            condition.signal();
             return peeked;
         }
     }
