@@ -19,7 +19,7 @@ public class ConcurrentStack implements Stack {
         Condition condition = lock.newCondition();
         lock.lock();
         try {
-            while (getSize() == size) {
+            while (getSize() > size) {
                 condition.await();
             }
             stack.addLast(i);
@@ -70,6 +70,15 @@ public class ConcurrentStack implements Stack {
     }
 
     public int getSize() {
-        return stack.size();
+        Lock lock = new ReentrantLock();
+        lock.lock();
+        int size;
+        try {
+            size = stack.size();
+        } finally {
+            lock.unlock();
+        }
+        return size;
     }
+
 }

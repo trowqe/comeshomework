@@ -1,7 +1,5 @@
 package task3;
 
-import java.util.Random;
-
 public class ThreadToPeek implements Runnable{
     private Stack stack;
     private int peekTimes;

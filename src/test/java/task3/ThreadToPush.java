@@ -18,5 +18,6 @@ public class ThreadToPush implements Runnable {
             System.out.println("push: "+intToPush);
             stack.push(intToPush);
         }
+        Thread.currentThread().interrupt();
     }
 }
