@@ -32,7 +32,7 @@ public class ConcurrentStackTest {
      }
 
      */
-    @Test
+   /* @Test
     public void concurrentStackTestPush() {
         ConcurrentStack stack = new ConcurrentStack(10);
 
@@ -75,7 +75,7 @@ public class ConcurrentStackTest {
             e.printStackTrace();
         }
         assert (stack.getSize() == 0);
-    }
+    }*/
 
 
 }
